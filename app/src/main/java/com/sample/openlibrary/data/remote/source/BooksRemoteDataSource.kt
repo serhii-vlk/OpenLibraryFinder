@@ -8,15 +8,14 @@ import com.sample.openlibrary.domain.functional.runCatchingData
 import javax.inject.Inject
 
 interface BooksRemoteDataSource {
-    suspend fun search(query: String): DataResult<List<BookSearchResultResponse>>
+    suspend fun search(query: String): DataResult<BookSearchResultResponse>
 }
 
 class BooksRemoteDataSourceImpl @Inject constructor(
     private val api: OpenLibraryApi,
     private val errorHandler: ErrorHandler
 ) : BooksRemoteDataSource {
-    override suspend fun search(query: String): DataResult<List<BookSearchResultResponse>> {
+    override suspend fun search(query: String): DataResult<BookSearchResultResponse> {
         return api.runCatchingData(errorHandler) { search(query) }
     }
-
 }

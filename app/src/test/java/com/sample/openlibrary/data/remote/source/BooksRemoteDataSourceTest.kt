@@ -4,7 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import com.sample.openlibrary.data.remote.ErrorHandler
 import com.sample.openlibrary.data.remote.RemoteErrorHandler
 import com.sample.openlibrary.data.remote.api.OpenLibraryApi
-import com.sample.openlibrary.data.remote.api.response.BookSearchResultResponse
+import com.sample.openlibrary.data.remote.api.response.BookSearchResponse
 import com.sample.openlibrary.domain.functional.DataResult
 import com.sample.openlibrary.domain.functional.Failure
 import io.mockk.*
@@ -28,8 +28,8 @@ class BooksRemoteDataSourceTest {
     internal fun `when api returns book list should returned some list wrapped Success`() =
         runBlockingTest {
             val books = listOf(
-                BookSearchResultResponse("Foo", 1),
-                BookSearchResultResponse("Bar", 2)
+                BookSearchResponse("Foo", 1),
+                BookSearchResponse("Bar", 2)
             )
             coEvery { openLibraryApi.search(any()) } returns books
 
