@@ -2,7 +2,9 @@ package com.sample.openlibrary.ui.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 @Suppress("UNCHECKED_CAST")
 abstract class SimpleViewModelFactory<VM : BaseViewModel<*>>(private val viewModel: VM) :
     ViewModelProvider.Factory {

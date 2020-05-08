@@ -45,6 +45,7 @@ android {
 
     kotlinOptions {
         jvmTarget = "1.8"
+        freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
     }
 
     testOptions {
@@ -73,9 +74,6 @@ dependencies {
 
     implementation(Deps.dagger)
     kapt(Deps.daggerCompiler)
-
-    implementation(Deps.rxJava)
-    implementation(Deps.rxAndroid)
 
     implementation(Deps.retrofit)
     implementation(Deps.retrofitConverterMoshi)

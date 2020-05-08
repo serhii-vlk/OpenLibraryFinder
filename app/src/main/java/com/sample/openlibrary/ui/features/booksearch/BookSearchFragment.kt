@@ -7,6 +7,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sample.openlibrary.R
 import com.sample.openlibrary.databinding.FragmentBookSearchBinding
@@ -16,8 +17,12 @@ import com.sample.openlibrary.ui.base.BaseFragment
 import com.sample.openlibrary.ui.extension.isShowing
 import com.sample.openlibrary.ui.features.booksearch.di.inject
 import com.sample.openlibrary.ui.features.booksearch.recycler.BookSearchAdapter
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Provider
 
+@ExperimentalCoroutinesApi
 class BookSearchFragment : BaseFragment(R.layout.fragment_book_search) {
 
     private val viewModel: BookSearchViewModel by viewModels { factory }
@@ -53,9 +58,9 @@ class BookSearchFragment : BaseFragment(R.layout.fragment_book_search) {
             doSearch()
         }
 
-        viewModel.state
-            .subscribe { render(it) }
-            .track()
+        lifecycleScope.launch {
+            viewModel.state.collect { render(it) }
+        }
     }
 
     override fun onDestroyView() {

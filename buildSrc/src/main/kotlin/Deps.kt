@@ -5,7 +5,7 @@ object Versions {
     const val dependencyVersionPlugin = "0.28.0"
 
     const val kotlin = "1.3.72"
-    const val coroutines = "1.3.5"
+    const val coroutines = "1.3.6"
     const val coreKtx = "1.3.0-rc01"
     const val appcompat = "1.2.0-beta01"
     const val activity = "1.1.0"

@@ -9,11 +9,13 @@ import com.sample.openlibrary.domain.functional.toEvent
 import com.sample.openlibrary.domain.model.Book
 import com.sample.openlibrary.ui.base.BaseViewModel
 import com.sample.openlibrary.ui.base.SimpleViewModelFactory
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 class BookSearchViewModel @Inject constructor(
     private val resources: BookSearchResources,
     private val booksRepository: BooksRepository
@@ -29,9 +31,9 @@ class BookSearchViewModel @Inject constructor(
         lastQuery = query
         searchJob?.cancel()
         searchJob = viewModelScope.launch {
-            updateState { copy(loading = true, isEmpty = false) }
+            reduceState { copy(loading = true, isEmpty = false) }
             when (val result = booksRepository.search(query)) {
-                is DataResult.Success -> updateState {
+                is DataResult.Success -> reduceState {
                     val books = result.data.books
                     copy(
                         loading = false,
@@ -48,7 +50,7 @@ class BookSearchViewModel @Inject constructor(
                         Failure.NetworkError -> "Network Error"
                         is Failure.Error -> error.throwable.message
                     }
-                    updateState { copy(loading = false, toast = message?.toEvent()) }
+                    reduceState { copy(loading = false, toast = message?.toEvent()) }
                 }
             }
         }

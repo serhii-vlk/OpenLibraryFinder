@@ -1,21 +1,18 @@
 package com.sample.openlibrary.ui.base
 
 import androidx.lifecycle.ViewModel
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.subjects.BehaviorSubject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
-abstract class BaseViewModel<S : BaseViewModel.ViewUiState>(
-    private val initState: S
-) : ViewModel() {
-    protected var currentState = initState
-    private val mutableState = BehaviorSubject.create<S>().apply {
-        onNext(initState)
-    }
-    val state: Observable<S> = mutableState
-        .doAfterNext { currentState = it }
+@ExperimentalCoroutinesApi
+abstract class BaseViewModel<S : BaseViewModel.ViewUiState>(initState: S) : ViewModel() {
 
-    protected fun updateState(reduce: S.() -> S) {
-        mutableState.onNext(reduce(currentState))
+    private val mutableState = MutableStateFlow(initState)
+    val state: StateFlow<S> get() = mutableState
+
+    protected fun reduceState(reduce: S.() -> S) {
+        mutableState.value = reduce(state.value)
     }
 
     interface ViewUiState

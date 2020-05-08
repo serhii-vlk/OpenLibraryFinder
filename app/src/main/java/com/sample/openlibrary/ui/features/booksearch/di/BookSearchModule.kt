@@ -8,7 +8,9 @@ import com.sample.openlibrary.ui.features.booksearch.BookSearchViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 @Module
 interface BookSearchModule {
     @Binds
