@@ -1,7 +1,7 @@
 package com.sample.openlibrary.ui.features.booksearch
 
 import androidx.lifecycle.viewModelScope
-import com.sample.openlibrary.data.remote.source.BooksRemoteDataSource
+import com.sample.openlibrary.data.repository.BooksRepository
 import com.sample.openlibrary.domain.functional.DataResult
 import com.sample.openlibrary.domain.functional.Event
 import com.sample.openlibrary.domain.functional.Failure
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 class BookSearchViewModel @Inject constructor(
     private val resources: BookSearchResources,
-    private val booksRemoteDataSource: BooksRemoteDataSource
+    private val booksRepository: BooksRepository
 ) : BaseViewModel<BookSearchViewModel.UiState>(UiState()) {
     private var searchJob: Job? = null
     private var lastQuery: String? = null
@@ -30,17 +30,14 @@ class BookSearchViewModel @Inject constructor(
         searchJob?.cancel()
         searchJob = viewModelScope.launch {
             updateState { copy(loading = true, isEmpty = false) }
-            val result = booksRemoteDataSource.search(query)
-            when (result) {
+            when (val result = booksRepository.search(query)) {
                 is DataResult.Success -> updateState {
-                    val data = result.data.docs
+                    val books = result.data.books
                     copy(
                         loading = false,
                         query = resources.queryResult(query),
-                        books = data.map {
-                            Book(title = it.title)
-                        },
-                        isEmpty = data.isEmpty()
+                        books = books,
+                        isEmpty = books.isEmpty()
                     )
                 }
                 is DataResult.Error -> {

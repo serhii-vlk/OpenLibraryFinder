@@ -6,6 +6,8 @@ import com.sample.openlibrary.data.remote.api.ApiConstants
 import com.sample.openlibrary.data.remote.api.OpenLibraryApi
 import com.sample.openlibrary.data.remote.source.BooksRemoteDataSource
 import com.sample.openlibrary.data.remote.source.BooksRemoteDataSourceImpl
+import com.sample.openlibrary.data.repository.BooksRepository
+import com.sample.openlibrary.data.repository.BooksRepositoryImpl
 import com.squareup.moshi.Moshi
 import dagger.Binds
 import dagger.Module
@@ -17,7 +19,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 
 interface DataProvider {
-    fun provideBooksRemoteDataSource(): BooksRemoteDataSource
+    fun provideBooksRepository(): BooksRepository
 }
 
 @Module(includes = [DataRemoteModule::class])
@@ -27,6 +29,9 @@ interface DataModule {
 
     @Binds
     fun BooksRemoteDataSourceImpl.bindBooksRemoteDataSource(): BooksRemoteDataSource
+
+    @Binds
+    fun BooksRepositoryImpl.bindBooksRepository(): BooksRepository
 }
 
 @Module
