@@ -1,11 +1,7 @@
-import de.mannodermaus.gradle.plugins.junit5.junitPlatform
-
 plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
-    id("jacoco")
-    id("de.mannodermaus.android-junit5")
 }
 
 android {
@@ -21,8 +17,6 @@ android {
         versionName = AppConfig.versionName
 
         testInstrumentationRunner("androidx.test.runner.AndroidJUnitRunner")
-        testInstrumentationRunnerArguments["runnerBuilder"] =
-            "de.mannodermaus.junit5.AndroidJUnit5Builder"
     }
 
     buildTypes {
@@ -33,6 +27,10 @@ android {
                 "proguard-rules.pro"
             )
         }
+    }
+
+    sourceSets.forEach {
+        it.java.srcDirs("src/${it.name}/kotlin")
     }
 
     buildFeatures {
@@ -49,16 +47,6 @@ android {
     }
 
     testOptions {
-        junitPlatform {
-            jacocoOptions {
-                html.enabled = true
-                xml.enabled = false
-                csv.enabled = false
-            }
-            filters {
-                includeEngines("spek2")
-            }
-        }
         unitTests.all {
             it.testLogging.events("passed", "skipped", "failed")
         }
@@ -66,6 +54,7 @@ android {
 }
 
 dependencies {
+    implementation(kotlin("stdlib"))
     implementation(kotlin("stdlib-jdk8"))
     implementation(Deps.coroutinesCore)
 
@@ -92,15 +81,14 @@ dependencies {
 
     implementation(Deps.timber)
 
-    testImplementation(kotlin("test"))
     testImplementation(kotlin("reflect"))
-    testImplementation(Deps.spekDslJvm)
-    testImplementation(Deps.spekRunnerJunit5)
+    testImplementation(Deps.truth)
+    testImplementation(Deps.coroutinesTest)
+    testImplementation(Deps.junit5JupiterApi)
+    testRuntimeOnly(Deps.junit5JupiterEngine)
     testImplementation(Deps.mockK)
 
     androidTestImplementation(Deps.espressoCore)
     androidTestImplementation(Deps.testRunner)
-    androidTestImplementation(Deps.junit5AndroidTestCore)
-    androidTestRuntimeOnly(Deps.junit5AndroidTestRunner)
     androidTestImplementation(Deps.mockKAndroid)
 }

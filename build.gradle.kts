@@ -6,9 +6,7 @@ buildscript {
     }
     dependencies {
         classpath(GradlePlugins.android)
-        classpath(kotlin("gradle-plugin"))
-        classpath(GradlePlugins.androidJUnit5)
-        classpath(GradlePlugins.jacocoCore)
+        classpath(kotlin("gradle-plugin", Versions.kotlin))
     }
 }
 
@@ -20,9 +18,6 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven {
-            url = uri("https://dl.bintray.com/spekframework/spek-dev")
-        }
     }
 }
 

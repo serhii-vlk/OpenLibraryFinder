@@ -19,7 +19,7 @@ object Versions {
     const val dagger = "2.27"
     const val moshi = "1.9.2"
     const val retrofit = "2.8.1"
-    const val okhttp = "3.12.6"
+    const val okhttp = "4.5.0"
     const val rxJava = "3.0.3"
     const val rxAndroid = "3.0.0"
     const val rxKotlin = "3.0.0"
@@ -28,7 +28,7 @@ object Versions {
 
     const val timber = "4.7.1"
 
-    const val junit5 = "5.6.0"
+    const val junit5 = "5.7.0-M1"
     const val junit5Companion = "1.2.0"
     const val testCore = "1.3.0-beta01"
     const val testExtJunit = "1.1.2-beta01"
@@ -89,6 +89,9 @@ object Deps {
     const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
     const val retrofitConverterMoshi = "com.squareup.retrofit2:converter-moshi:${Versions.retrofit}"
 
+    const val okhttpLoggingInteractor =
+        "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp}"
+
     const val moshi = "com.squareup.moshi:moshi:${Versions.moshi}"
     const val moshiKotlinCodegen = "com.squareup.moshi:moshi-kotlin-codegen:${Versions.moshi}"
 
@@ -97,6 +100,8 @@ object Deps {
     const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
 
     // testing
+    const val junit5JupiterApi = "org.junit.jupiter:junit-jupiter-api:${Versions.junit5}"
+    const val junit5JupiterEngine = "org.junit.jupiter:junit-jupiter-engine:${Versions.junit5}"
     const val junit5AndroidTestCore =
         "de.mannodermaus.junit5:android-test-core:${Versions.junit5Companion}"
     const val junit5AndroidTestRunner =
