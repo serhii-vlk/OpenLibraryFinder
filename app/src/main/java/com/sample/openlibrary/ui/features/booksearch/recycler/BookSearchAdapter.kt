@@ -4,6 +4,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
 import com.sample.openlibrary.databinding.ViewHolderBookBinding
 import com.sample.openlibrary.domain.model.Book
 import com.sample.openlibrary.ui.extension.inflater
@@ -25,7 +26,12 @@ class BookSearchAdapter : ListAdapter<Book, BookSearchAdapter.BookViewHolder>(Di
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Book) = with(binding) {
             title.text = item.title
-            author.text = item.title
+            author.text = item.authorsNames.joinToString(", ")
+            subtitle.text = item.subtitle
+
+            item.coverI?.let { "https://covers.openlibrary.org/w/id/$it-S.jpg" }?.also {
+                cover.load(it)
+            }
         }
     }
 

@@ -6,5 +6,11 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class BookSearchResponse(
     @get:Json(name = "title")
-    val title: String
+    val title: String? = null,
+    @get:Json(name = "subtitle")
+    val subtitle: String? = null,
+    @get:Json(name = "author_name")
+    val authorName: List<String>? = null,
+    @get:Json(name = "cover_i")
+    val coverI: Long? = null
 )

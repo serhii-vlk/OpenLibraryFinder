@@ -3,6 +3,7 @@ package com.sample.openlibrary.ui.features.booksearch
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -41,9 +42,15 @@ class BookSearchFragment : BaseFragment(R.layout.fragment_book_search) {
             adapter = searchAdapter
         }
 
+        binding.searchInput.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                doSearch()
+                return@setOnEditorActionListener true
+            }
+            return@setOnEditorActionListener false
+        }
         binding.actionSearch.setOnClickListener {
-            val query = binding.searchInput.text.toString()
-            viewModel.searchQuery(query)
+            doSearch()
         }
 
         viewModel.state
@@ -54,6 +61,11 @@ class BookSearchFragment : BaseFragment(R.layout.fragment_book_search) {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun doSearch() {
+        val query = binding.searchInput.text.toString()
+        viewModel.searchQuery(query)
     }
 
     private fun render(state: BookSearchViewModel.UiState) {

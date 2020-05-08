@@ -18,6 +18,8 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:hint="@string/book_search_hint"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
         android:lines="1"
         app:layout_constraintBottom_toTopOf="@+id/search_barrier"
         app:layout_constraintEnd_toStartOf="@+id/action_search"
@@ -25,7 +27,7 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
-    <Button
+    <ImageButton
         android:id="@+id/action_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,7 +35,9 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="8dp"
-        android:text="@string/book_search_action"
+        android:background="?selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_baseline_search_24"
+        android:tint="?colorAccent"
         app:layout_constraintBottom_toTopOf="@+id/search_barrier"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

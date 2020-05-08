@@ -7,7 +7,10 @@ import javax.inject.Inject
 class BookMapper @Inject constructor() {
     operator fun invoke(response: BookSearchResponse) = with(response) {
         Book(
-            title = title
+            title = title,
+            subtitle = subtitle,
+            authorsNames = authorName.orEmpty(),
+            coverI = coverI
         )
     }
 }
