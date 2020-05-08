@@ -61,9 +61,11 @@ dependencies {
     implementation(Deps.coreKtx)
     implementation(Deps.appcompat)
     implementation(Deps.fragment)
+    implementation(Deps.activity)
     implementation(Deps.material)
     implementation(Deps.constraintLayout)
     implementation(Deps.recyclerView)
+    implementation(Deps.swipeRepreshLayout)
     implementation(Deps.navigationFragment)
 
     implementation(Deps.coil)
@@ -76,6 +78,7 @@ dependencies {
 
     implementation(Deps.retrofit)
     implementation(Deps.retrofitConverterMoshi)
+    implementation(Deps.okhttpLoggingInteractor)
     implementation(Deps.moshi)
     kapt(Deps.moshiKotlinCodegen)
 

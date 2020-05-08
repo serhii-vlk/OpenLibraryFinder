@@ -13,6 +13,7 @@ object Versions {
     const val material = "1.2.0-alpha06"
     const val constraintLayout = "2.0.0-beta4"
     const val recyclerView = "1.2.0-alpha03"
+    const val swipeRefreshLayout = "1.0.0"
     const val navigation = "2.3.0-alpha06"
     const val lifecycle = "2.3.0-alpha02"
     const val paging = "2.1.1"
@@ -65,6 +66,8 @@ object Deps {
     const val constraintLayout =
         "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
     const val recyclerView = "androidx.recyclerview:recyclerview:${Versions.recyclerView}"
+    const val swipeRepreshLayout =
+        "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swipeRefreshLayout}"
 
     const val lifecycleCommon = "androidx.lifecycle:lifecycle-common:${Versions.lifecycle}"
     const val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycle}"
