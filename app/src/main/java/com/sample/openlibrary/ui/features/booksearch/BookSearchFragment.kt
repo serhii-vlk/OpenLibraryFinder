@@ -74,6 +74,6 @@ class BookSearchFragment : BaseFragment(R.layout.fragment_book_search) {
 
         searchAdapter.submitList(state.books)
 
-        state.toast?.consume(::toast)
+        state.toast?.consume { toast(it) }
     }
 }

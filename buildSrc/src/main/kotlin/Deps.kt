@@ -9,6 +9,7 @@ object Versions {
     const val coreKtx = "1.3.0-rc01"
     const val appcompat = "1.2.0-beta01"
     const val activity = "1.1.0"
+    const val archCore = "2.1.0"
     const val fragment = "1.3.0-alpha04"
     const val material = "1.2.0-alpha06"
     const val constraintLayout = "2.0.0-beta4"
@@ -91,6 +92,7 @@ object Deps {
 
     const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
     const val retrofitConverterMoshi = "com.squareup.retrofit2:converter-moshi:${Versions.retrofit}"
+    const val retrofitMock = "com.squareup.retrofit2:retrofit-mock:${Versions.retrofit}"
 
     const val okhttpLoggingInteractor =
         "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp}"
@@ -114,6 +116,7 @@ object Deps {
     const val testRules = "androidx.test:rules:${Versions.testCore}"
     const val testExtJunit = "androidx.test.ext:junit:${Versions.testExtJunit}"
     const val testExtTruth = "androidx.test.ext:truth:${Versions.testExtTruth}"
+    const val archCoreTesting = "androidx.arch.core:core-testing:${Versions.archCore}"
     const val truth = "com.google.truth:truth:${Versions.truth}"
     const val mockK = "io.mockk:mockk:${Versions.mockK}"
     const val mockKAndroid = "io.mockk:mockk-android:${Versions.mockK}"

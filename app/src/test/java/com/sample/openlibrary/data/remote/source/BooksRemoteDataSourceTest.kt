@@ -5,6 +5,7 @@ import com.sample.openlibrary.data.remote.ErrorHandler
 import com.sample.openlibrary.data.remote.RemoteErrorHandler
 import com.sample.openlibrary.data.remote.api.OpenLibraryApi
 import com.sample.openlibrary.data.remote.api.response.BookSearchResponse
+import com.sample.openlibrary.data.remote.api.response.BookSearchResultResponse
 import com.sample.openlibrary.domain.functional.DataResult
 import com.sample.openlibrary.domain.functional.Failure
 import io.mockk.*
@@ -28,13 +29,17 @@ class BooksRemoteDataSourceTest {
     internal fun `when api returns book list should returned some list wrapped Success`() =
         runBlockingTest {
             val books = listOf(
-                BookSearchResponse("Foo", 1),
-                BookSearchResponse("Bar", 2)
+                BookSearchResponse("Foo", "foo", listOf("foo author"), 1),
+                BookSearchResponse("Bar", "bar", listOf("bar author"), 2)
             )
-            coEvery { openLibraryApi.search(any()) } returns books
+            coEvery { openLibraryApi.search(any()) } returns BookSearchResultResponse(
+                start = 0,
+                numFound = books.size,
+                docs = books
+            )
 
             val result = sut.search("")
-            val list = (result as DataResult.Success).data
+            val list = (result as DataResult.Success).data.docs
             assertThat(list).containsExactlyElementsIn(books)
         }
 
