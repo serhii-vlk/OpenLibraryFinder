@@ -41,6 +41,10 @@ class BookDetailsFragment : BaseFragment(R.layout.fragment_book_details) {
         title.text = state.title
         authors.text = state.authors
         subtitle.text = state.subtitle
-        state.coverUrl?.also { cover.load(it) }
+        state.coverUrl?.also {
+            cover.load(it) {
+                error(R.drawable.ic_baseline_broken_image_24)
+            }
+        }
     }
 }

@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
+import com.sample.openlibrary.R
 import com.sample.openlibrary.databinding.ViewHolderBookBinding
 import com.sample.openlibrary.domain.model.Book
 import com.sample.openlibrary.domain.model.coverSmallUrl
@@ -38,7 +39,9 @@ class BookSearchAdapter constructor(
             subtitle.text = item.subtitle
 
             item.coverSmallUrl?.also {
-                cover.load(it)
+                cover.load(it) {
+                    error(R.drawable.ic_baseline_broken_image_24)
+                }
             }
         }
     }
