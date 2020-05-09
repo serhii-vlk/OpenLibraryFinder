@@ -3,6 +3,7 @@ plugins {
     kotlin("android")
     kotlin("android.extensions")
     kotlin("kapt")
+    id("androidx.navigation.safeargs")
 }
 
 android {
@@ -73,6 +74,7 @@ dependencies {
     implementation(Deps.recyclerView)
     implementation(Deps.swipeRepreshLayout)
     implementation(Deps.navigationFragment)
+    implementation(Deps.navigationUi)
 
     implementation(Deps.coil)
 

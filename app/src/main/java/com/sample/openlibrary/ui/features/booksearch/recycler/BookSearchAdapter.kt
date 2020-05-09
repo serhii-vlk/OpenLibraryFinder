@@ -7,13 +7,21 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import com.sample.openlibrary.databinding.ViewHolderBookBinding
 import com.sample.openlibrary.domain.model.Book
+import com.sample.openlibrary.domain.model.coverSmallUrl
 import com.sample.openlibrary.ui.extension.inflater
 
-class BookSearchAdapter : ListAdapter<Book, BookSearchAdapter.BookViewHolder>(DiffCallback()) {
+class BookSearchAdapter constructor(
+    private val clickListener: (Book) -> Unit
+) : ListAdapter<Book, BookSearchAdapter.BookViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
         val binding = ViewHolderBookBinding.inflate(parent.inflater(), parent, false)
-        return BookViewHolder(binding)
+        return BookViewHolder(binding).apply {
+            itemView.setOnClickListener {
+                val item = getItem(bindingAdapterPosition)
+                clickListener(item)
+            }
+        }
     }
 
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
@@ -29,7 +37,7 @@ class BookSearchAdapter : ListAdapter<Book, BookSearchAdapter.BookViewHolder>(Di
             author.text = item.authorsNames.joinToString(", ")
             subtitle.text = item.subtitle
 
-            item.coverI?.let { "https://covers.openlibrary.org/w/id/$it-S.jpg" }?.also {
+            item.coverSmallUrl?.also {
                 cover.load(it)
             }
         }
@@ -44,5 +52,4 @@ class BookSearchAdapter : ListAdapter<Book, BookSearchAdapter.BookViewHolder>(Di
             return oldItem == newItem
         }
     }
-
 }

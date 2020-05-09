@@ -6,12 +6,14 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sample.openlibrary.R
 import com.sample.openlibrary.databinding.FragmentBookSearchBinding
-import com.sample.openlibrary.di.DataProvider
 import com.sample.openlibrary.domain.functional.consume
+import com.sample.openlibrary.host.HostProvider
+import com.sample.openlibrary.host.navigation.HostNavigator
 import com.sample.openlibrary.ui.base.BaseFragment
 import com.sample.openlibrary.ui.extension.isShowing
 import com.sample.openlibrary.ui.extension.toast
@@ -21,20 +23,29 @@ import com.sample.openlibrary.ui.features.booksearch.recycler.BookSearchAdapter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import javax.inject.Provider
 
 @ExperimentalCoroutinesApi
 class BookSearchFragment : BaseFragment(R.layout.fragment_book_search) {
 
+    @Inject
+    lateinit var factory: ViewModelProvider.Factory
+
+    @Inject
+    lateinit var navigator: HostNavigator
+
     private val viewModel: BookSearchViewModel by viewModels { factory }
 
     private val binding by viewBinding(FragmentBookSearchBinding::bind)
 
-    private val searchAdapter = BookSearchAdapter()
+    private val searchAdapter = BookSearchAdapter {
+        navigator.actionBookDetails(it)
+    }
 
     @Suppress("UNCHECKED_CAST")
     override fun onAttach(context: Context) {
-        (context as Provider<DataProvider>).get().also(this::inject)
+        (context as Provider<HostProvider>).get().also(this::inject)
         super.onAttach(context)
     }
 

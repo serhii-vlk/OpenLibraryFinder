@@ -1,7 +1,7 @@
 package com.sample.openlibrary.ui.features.booksearch.di
 
-import com.sample.openlibrary.di.DataProvider
 import com.sample.openlibrary.di.PerFragment
+import com.sample.openlibrary.host.HostProvider
 import com.sample.openlibrary.ui.features.booksearch.BookSearchFragment
 import dagger.BindsInstance
 import dagger.Component
@@ -11,7 +11,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @PerFragment
 @Component(
     modules = [BookSearchModule::class],
-    dependencies = [DataProvider::class]
+    dependencies = [HostProvider::class]
 )
 interface BookSearchComponent {
     fun inject(fragment: BookSearchFragment)
@@ -20,7 +20,7 @@ interface BookSearchComponent {
     interface Factory {
         fun create(
             @BindsInstance fragment: BookSearchFragment,
-            dataProvider: DataProvider
+            hostProvider: HostProvider
         ): BookSearchComponent
     }
 }

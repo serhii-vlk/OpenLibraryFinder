@@ -46,6 +46,8 @@ object GradlePlugins {
     const val androidJUnit5 =
         "de.mannodermaus.gradle.plugins:android-junit5:${Versions.androidJunit5Plugin}"
     const val jacocoCore = "org.jacoco:org.jacoco.core:${Versions.jacocoPlugin}"
+    const val navSafeArgs =
+        "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.navigation}"
 }
 
 object Deps {

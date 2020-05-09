@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">OpenLibrarySample</string>
+    <string name="book_search_title">Search</string>
     <string name="book_search_action">Search</string>
     <string name="book_search_hint">Enter book name</string>
     <string name="book_search_empty">Empty List</string>
     <string name="book_search_query_result_formatted">Query: %s</string>
+    <string name="book_details_title">Book Details</string>
 </resources>
