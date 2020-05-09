@@ -30,6 +30,10 @@ android {
         }
     }
 
+    androidExtensions {
+        features = setOf("parcelize")
+    }
+
     sourceSets.forEach {
         it.java.srcDirs("src/${it.name}/kotlin")
     }
