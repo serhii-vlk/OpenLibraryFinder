@@ -4,18 +4,14 @@ import com.google.common.truth.Truth.assertThat
 import com.sample.openlibrary.data.remote.ErrorHandler
 import com.sample.openlibrary.data.remote.RemoteErrorHandler
 import com.sample.openlibrary.data.remote.api.OpenLibraryApi
-import com.sample.openlibrary.domain.functional.DataResult
 import com.sample.openlibrary.domain.functional.Failure
 import com.sample.openlibrary.domain.functional.getErrorOrNull
+import com.sample.openlibrary.domain.functional.getOrNull
 import com.sample.openlibrary.test.MockResponseException
 import com.sample.openlibrary.test.TestCoroutinesRule
 import com.sample.openlibrary.test.mockSearchResult
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.mockk
-import io.mockk.slot
+import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
@@ -47,18 +43,18 @@ class BooksRemoteDataSourceTest {
                 openLibraryApi.search(capture(querySlot))
             }
             assertThat(querySlot.captured).isEqualTo(SEARCH_QUERY)
+            confirmVerified(openLibraryApi)
         }
 
     @Test
-    internal fun `search book success returned data`() =
-        runBlockingTest {
-            success()
+    internal fun `search book success returned data`() = testCoroutinesRule.runBlocking {
+        success()
 
-            val result = (sut.search("") as DataResult.Success).data
-            assertThat(result.start).isEqualTo(mockSearchResult.start)
-            assertThat(result.numFound).isEqualTo(mockSearchResult.numFound)
-            assertThat(result.docs).containsExactlyElementsIn(mockSearchResult.docs)
-        }
+        val result = sut.search("").getOrNull().let(::checkNotNull)
+        assertThat(result.start).isEqualTo(mockSearchResult.start)
+        assertThat(result.numFound).isEqualTo(mockSearchResult.numFound)
+        assertThat(result.docs).containsExactlyElementsIn(mockSearchResult.docs)
+    }
 
     @Test
     internal fun `search book unknown error returned failure`() = testCoroutinesRule.runBlocking {
@@ -66,7 +62,7 @@ class BooksRemoteDataSourceTest {
 
         val result = sut.search("")
 
-        val throwable = ((result as DataResult.Error).error as Failure.Unknown).cause
+        val throwable = (result.getErrorOrNull() as Failure.Unknown).cause
         assertThat(throwable).isEqualTo(unknownErrorMock)
     }
 
@@ -75,7 +71,7 @@ class BooksRemoteDataSourceTest {
         networkError()
 
         val result = sut.search("")
-        val error = (result as DataResult.Error).error
+        val error = result.getErrorOrNull()
         assertThat(error).isInstanceOf(Failure.NetworkError::class.java)
     }
 
