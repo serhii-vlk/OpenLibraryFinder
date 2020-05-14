@@ -48,7 +48,7 @@ class BookSearchViewModel @Inject constructor(
                     val message = when (error) {
                         is Failure.ApiError -> error.message
                         Failure.NetworkError -> "Network Error"
-                        is Failure.Error -> error.throwable.message
+                        is Failure.Unknown -> error.cause.message
                     }
                     reduceState { copy(loading = false, toast = message?.toEvent()) }
                 }

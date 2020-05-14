@@ -18,7 +18,7 @@ android {
         versionCode = AppConfig.versionCode
         versionName = AppConfig.versionName
 
-        testInstrumentationRunner("androidx.test.runner.AndroidJUnitRunner")
+        setTestInstrumentationRunner("androidx.test.runner.AndroidJUnitRunner")
     }
 
     buildTypes {
@@ -39,8 +39,8 @@ android {
         it.java.srcDirs("src/${it.name}/kotlin")
     }
 
-    buildFeatures {
-        viewBinding = true
+    viewBinding {
+        isEnabled = true
     }
 
     compileOptions {
@@ -51,12 +51,6 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
         freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
-    }
-
-    testOptions {
-        unitTests.all {
-            it.testLogging.events("passed", "skipped", "failed")
-        }
     }
 }
 

@@ -15,11 +15,11 @@ class RemoteErrorHandler @Inject constructor() : ErrorHandler {
             is IOException -> Failure.NetworkError
             is HttpException -> {
                 Failure.ApiError(
-                    message = throwable.message(),
+                    message = throwable.response()?.errorBody()?.string(),
                     code = throwable.code()
                 )
             }
-            else -> Failure.Error(throwable)
+            else -> Failure.Unknown(throwable)
         }
     }
 }

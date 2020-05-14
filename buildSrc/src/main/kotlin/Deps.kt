@@ -1,5 +1,5 @@
 object Versions {
-    const val androidGradlePlugin = "4.1.0-alpha09"
+    const val androidGradlePlugin = "3.6.0"
     const val androidJunit5Plugin = "1.6.2.0"
     const val jacocoPlugin = "0.8.5"
     const val dependencyVersionPlugin = "0.28.0"
