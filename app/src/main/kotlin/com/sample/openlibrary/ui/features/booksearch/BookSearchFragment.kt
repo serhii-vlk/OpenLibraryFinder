@@ -20,6 +20,7 @@ import com.sample.openlibrary.ui.extension.toast
 import com.sample.openlibrary.ui.extension.viewBinding
 import com.sample.openlibrary.ui.features.booksearch.di.inject
 import com.sample.openlibrary.ui.features.booksearch.recycler.BookSearchAdapter
+import dagger.Lazy
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -33,7 +34,8 @@ class BookSearchFragment : BaseFragment(R.layout.fragment_book_search) {
     lateinit var factory: ViewModelProvider.Factory
 
     @Inject
-    lateinit var navigator: HostNavigator
+    lateinit var _navigator: Lazy<HostNavigator>
+    private val navigator get() = _navigator.get()
 
     private val viewModel: BookSearchViewModel by viewModels { factory }
 

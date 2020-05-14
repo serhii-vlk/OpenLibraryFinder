@@ -37,10 +37,20 @@ class MainActivity : AppCompatActivity(), Provider<HostProvider> {
         setContentView(binding.root)
     }
 
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super.onPostCreate(savedInstanceState)
+        setupToolbarWithNavController()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
 
     override fun get() = provider
+
+    private fun setupToolbarWithNavController() {
+        val config = AppBarConfiguration(setOf(R.id.nav_bookSearch))
+        binding.toolbar.setupWithNavController(navController, config)
+    }
 }
