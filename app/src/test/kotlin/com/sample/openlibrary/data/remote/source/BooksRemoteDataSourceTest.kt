@@ -15,7 +15,6 @@ import io.mockk.coVerify
 import io.mockk.mockk
 import io.mockk.slot
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
@@ -50,15 +49,14 @@ class BooksRemoteDataSourceTest {
         }
 
     @Test
-    internal fun `search book success returned data`() =
-        runBlockingTest {
-            success()
+    internal fun `search book success returned data`() = testCoroutinesRule.runBlocking {
+        success()
 
-            val result = (sut.search("") as DataResult.Success).data
-            assertThat(result.start).isEqualTo(mockSearchResult.start)
-            assertThat(result.numFound).isEqualTo(mockSearchResult.numFound)
-            assertThat(result.docs).containsExactlyElementsIn(mockSearchResult.docs)
-        }
+        val result = (sut.search("") as DataResult.Success).data
+        assertThat(result.start).isEqualTo(mockSearchResult.start)
+        assertThat(result.numFound).isEqualTo(mockSearchResult.numFound)
+        assertThat(result.docs).containsExactlyElementsIn(mockSearchResult.docs)
+    }
 
     @Test
     internal fun `search book unknown error returned failure`() = testCoroutinesRule.runBlocking {
